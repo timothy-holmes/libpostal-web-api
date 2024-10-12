@@ -16,10 +16,12 @@ RUN ./configure --datadir=/var/postal
 RUN make
 RUN ldconfig
 
+CMD ["tail", "-f", "/dev/null"]
+
 # web server installation
-COPY ./requirements.txt /srv/libpostal
-RUN pip install -r requirements.txt
+# COPY ./requirements.txt /srv/libpostal
+# RUN pip install -r requirements.txt
 
-COPY ./main.py /srv/libpostal
+# COPY ./main.py /srv/libpostal
 
-CMD ["python", "/srv/libpostal/main.py"]
+# CMD ["python", "/srv/libpostal/main.py"]

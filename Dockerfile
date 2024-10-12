@@ -1,7 +1,8 @@
 FROM python:3.12-bookworm
 
 RUN apt-get update
-RUN apt-get install curl autoconf automake libtool python3-dev pkg-config
+RUN apt-get install -y \
+    curl autoconf automake libtool python3-dev pkg-config
 
 # libpostal installation
 WORKDIR /srv

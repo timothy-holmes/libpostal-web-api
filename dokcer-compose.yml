@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    container_name: postal-api
+    env_file: .env_public
+    ports:
+      - "${WEBSERVER_PORT}:${WEBSERVER_PORT}"
+    volumes:
+      - ./data:/var/postal

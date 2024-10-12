@@ -1,10 +1,11 @@
 FROM python:3.12-bookworm
 
-RUN apt-get update
-RUN apt-get install -y \
-    curl autoconf automake libtool python3-dev pkg-config
+# Install required dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    curl autoconf automake libtool python3-dev pkg-config gcc
 
-# libpostal installation
+# Install libpostal
 WORKDIR /srv
 
 RUN git clone https://github.com/openvenues/libpostal
@@ -14,11 +15,16 @@ WORKDIR /srv/libpostal
 RUN ./bootstrap.sh
 RUN ./configure --datadir=/var/postal
 RUN make
-RUN export PKG_CONFIG_PATH=/srv/libpostal && \
-    export CFLAGS="-I/srv/libpostal/src" && \
-    export LDFLAGS="-L/srv/libpostal/src/.libs" && \
-    export LD_LIBRARY_PATH=/srv/libpostal/src/.libs:$LD_LIBRARY_PATH
+RUN make install  # Install libpostal after building
+RUN ldconfig  # Update the shared library cache
 
+# Set environment variables to help pypostal find libpostal during pip install
+ENV PKG_CONFIG_PATH=/srv/libpostal
+ENV CFLAGS="-I/srv/libpostal/src"
+ENV LDFLAGS="-L/srv/libpostal/src/.libs"
+ENV LD_LIBRARY_PATH=/srv/libpostal/src/.libs:$LD_LIBRARY_PATH
+
+# Install the pypostal Python bindings
 RUN pip install postal
 
 CMD ["tail", "-f", "/dev/null"]

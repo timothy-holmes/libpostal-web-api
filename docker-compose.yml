@@ -1,11 +1,6 @@
 services:
-  web:
-    build: .
-    container_name: postal-api
-    environment:
-      - WEBSERVER_PORT=9999
-      - DEBUG=False
+  libpostal:
+    image: pelias/libpostal-service
+    container_name: libpostal
     ports:
-      - 9999:9999
-    volumes:
-      - ./data:/var/postal
+      - 4400:4400

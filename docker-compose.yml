@@ -2,8 +2,10 @@ services:
   web:
     build: .
     container_name: postal-api
-    env_file: .env_public
+    environment:
+      - WEBSERVER_PORT=${WEBSERVER_PORT:9999}
+      - DEBUG=${DEBUG:False}
     ports:
-      - "$WEBSERVER_PORT:$WEBSERVER_PORT"
+      - "${WEBSERVER_PORT:9999}:${WEBSERVER_PORT:9999}"
     volumes:
       - ./data:/var/postal

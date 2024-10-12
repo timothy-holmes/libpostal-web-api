@@ -18,7 +18,7 @@ RUN ldconfig
 
 # web server installation
 COPY ./requirements.txt /srv/libpostal
-RUN pip install requirements.txt
+RUN pip install -r requirements.txt
 
 COPY ./main.py /srv/libpostal
 

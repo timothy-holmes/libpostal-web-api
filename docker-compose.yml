@@ -4,3 +4,4 @@ services:
     container_name: libpostal
     ports:
       - 4400:4400
+    restart: unless-stopped

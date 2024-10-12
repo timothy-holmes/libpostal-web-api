@@ -23,11 +23,11 @@ ENV PKG_CONFIG_PATH=/srv/libpostal
 ENV CFLAGS="-I/srv/libpostal/src"
 ENV LDFLAGS="-L/srv/libpostal/src/.libs"
 ENV LD_LIBRARY_PATH=/srv/libpostal/src/.libs:$LD_LIBRARY_PATH
+CMD ["tail", "-f", "/dev/null"]
 
 # Install the pypostal Python bindings
-RUN pip install postal
+# RUN pip install postal
 
-CMD ["tail", "-f", "/dev/null"]
 
 # web server installation
 # COPY ./requirements.txt /srv/libpostal

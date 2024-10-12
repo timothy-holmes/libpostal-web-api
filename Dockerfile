@@ -14,7 +14,12 @@ WORKDIR /srv/libpostal
 RUN ./bootstrap.sh
 RUN ./configure --datadir=/var/postal
 RUN make
-RUN ldconfig
+RUN export PKG_CONFIG_PATH=/srv/libpostal && \
+    export CFLAGS="-I/srv/libpostal/src" && \
+    export LDFLAGS="-L/srv/libpostal/src/.libs" && \
+    export LD_LIBRARY_PATH=/srv/libpostal/src/.libs:$LD_LIBRARY_PATH
+
+RUN pip install postal
 
 CMD ["tail", "-f", "/dev/null"]
 
